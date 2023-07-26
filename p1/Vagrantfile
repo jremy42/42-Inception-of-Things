@@ -2,8 +2,8 @@
 Vagrant.configure(2) do |config| # 2 = version 2
 
 # Configuration de la box utilisée pour les machines virtuelles
-config.vm.box = "ubuntu/trusty64"
-config.vm.box_url = "ubuntu/trusty64"
+config.vm.box = "ubuntu/bionic64"
+config.vm.box_url = "ubuntu/bionic64"
 
 
 # Liste des serveurs avec leurs paramètres
@@ -28,13 +28,15 @@ NODES.each do |node|
     end
 
     # Ajout des entrées /etc/hosts pour chaque machine virtuelle
-    cfg.vm.provision :shell, <<-SHELL
-    # Activer l'authentification ChallengeResponse dans sshd_config
-    sudo sed -i 's/#ChallengeResponseAuthentication yes/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config
-    sudo service ssh restart
-    SHELL
-    cfg.vm.provision :shell, path: "scripts/install_common.sh"
+cfg.vm.synced_folder  ".", "/vagrant", type: "virtualbox"
+cfg.vm.provision :shell, inline: <<-SHELL
+# Activer l'authentification ChallengeResponse dans sshd_config
+sudo sed -i 's/#ChallengeResponseAuthentication yes/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config
+sudo service ssh restart
 
+# Exécuter le script "install_common.sh"
+bash /vagrant/scripts/master.sh
+SHELL
   end
 end
 end
