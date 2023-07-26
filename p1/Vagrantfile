@@ -8,8 +8,8 @@ config.vm.box_url = "ubuntu/bionic64"
 
 # Liste des serveurs avec leurs paramètres
 NODES = [
-  { :hostname => "jremyS", :ip => "192.168.56.10", :cpus => 1, :mem => 512, :type => "master" },
-  { :hostname => "jremySW", :ip => "192.168.56.11", :cpus => 1, :mem => 512, :type => "worker" },
+  { :hostname => "jremyS", :ip => "192.168.56.10", :cpus => 1, :mem => 1024, :type => "master" },
+  { :hostname => "jremySW", :ip => "192.168.56.11", :cpus => 1, :mem => 1024, :type => "worker" },
 ]
 
 
